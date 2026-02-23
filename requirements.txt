@@ -1,0 +1,19 @@
+# AG_Analizador_RCE - Production Dependencies
+# Install with: pip install -r requirements.txt
+
+# Data Analysis (required by alma_analyzer.py)
+pandas>=2.1.0
+numpy>=1.26.0
+
+# Data Validation
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# Configuration
+python-dotenv>=1.0.0
+
+# HTTP Client
+httpx>=0.26.0
+
+# Logging
+structlog>=24.1.0

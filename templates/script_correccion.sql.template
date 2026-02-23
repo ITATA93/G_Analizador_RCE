@@ -1,0 +1,62 @@
+-- ============================================================
+-- SCRIPT DE CORRECCION - {{tabla}}
+-- Generado: {{fecha}}
+-- Archivo origen: {{archivo}}
+-- ============================================================
+-- IMPORTANTE:
+-- 1. Ejecutar primero en ambiente de pruebas
+-- 2. Hacer backup antes de ejecutar en produccion
+-- 3. Revisar cada UPDATE antes de ejecutar
+-- ============================================================
+
+-- Iniciar transaccion
+BEGIN TRANSACTION;
+
+-- ============================================================
+-- SECCION 1: CORRECCIONES AUTOMATICAS (TRIM)
+-- ============================================================
+{{#correcciones_trim}}
+-- Limpiar espacios en campo: {{campo}}
+UPDATE {{tabla}}
+SET {{campo}} = TRIM({{campo}})
+WHERE {{campo}} != TRIM({{campo}});
+-- Registros afectados estimados: {{cantidad}}
+
+{{/correcciones_trim}}
+
+-- ============================================================
+-- SECCION 2: CORRECCIONES DE FORMATO
+-- ============================================================
+{{#correcciones_formato}}
+-- {{descripcion}}
+-- UPDATE {{tabla}} SET {{campo}} = {{correccion}} WHERE {{condicion}};
+
+{{/correcciones_formato}}
+
+-- ============================================================
+-- SECCION 3: CORRECCIONES MANUALES REQUERIDAS
+-- ============================================================
+-- Los siguientes registros requieren revision manual:
+{{#correcciones_manuales}}
+-- Fila {{fila}}: {{campo}} = '{{valor}}' -> {{mensaje}}
+{{/correcciones_manuales}}
+
+-- ============================================================
+-- VERIFICACION POST-CORRECCION
+-- ============================================================
+-- Ejecutar despues de las correcciones para validar:
+
+-- Contar registros aun con espacios
+SELECT COUNT(*) as registros_con_espacios
+FROM {{tabla}}
+WHERE
+{{#campos_verificar}}
+    {{campo}} != TRIM({{campo}}) OR
+{{/campos_verificar}}
+    1=0;
+
+-- Confirmar cambios (descomentar cuando este seguro)
+-- COMMIT;
+
+-- O revertir si hay problemas
+-- ROLLBACK;

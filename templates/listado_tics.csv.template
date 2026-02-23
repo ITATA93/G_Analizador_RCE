@@ -1,0 +1,24 @@
+# Template para listados TICS
+# Columnas esperadas en archivo de salida:
+#
+# fila,campo,valor_actual,tipo_error,mensaje,accion_sugerida,prioridad,estado_revision
+#
+# Descripcion de columnas:
+# - fila: Numero de fila en archivo original
+# - campo: Nombre del campo con error
+# - valor_actual: Valor que tiene el campo actualmente
+# - tipo_error: Codigo del tipo de error (CAMPO_VACIO, ESPACIOS_EXTRA, etc.)
+# - mensaje: Descripcion del error
+# - accion_sugerida: Que hacer para corregir
+# - prioridad: ALTA, MEDIA, BAJA
+# - estado_revision: PENDIENTE, EN_PROCESO, CORREGIDO, DESCARTADO
+#
+# Tipos de error posibles:
+# - CAMPO_VACIO: Campo obligatorio sin valor
+# - ESPACIOS_EXTRA: Tiene espacios al inicio o fin
+# - LONGITUD_EXCEDIDA: Valor mas largo de lo permitido
+# - CARACTERES_INVALIDOS: Contiene caracteres problematicos
+# - FORMATO_FECHA: Fecha en formato incorrecto
+# - VALOR_INVALIDO: Valor no esta en catalogo permitido
+# - RUT_INVALIDO: RUT con digito verificador incorrecto
+# - EMAIL_INVALIDO: Formato de email incorrecto

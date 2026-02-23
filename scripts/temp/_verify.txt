@@ -1,0 +1,13 @@
+AG_Plantilla | OK
+AG_Analizador_RCE | OK
+AG_Consultas | OK
+AG_DeepResearch_Salud_Chile | OK
+AG_Hospital | OK
+AG_Hospital_Organizador | OK
+AG_Informatica_Medica | OK
+AG_Lists_Agent | OK
+AG_NB_Apps | OK
+AG_Notebook | OK
+AG_SD_Plantilla | OK
+AG_SV_Agent | OK
+AG_TrakCare_Explorer | OK

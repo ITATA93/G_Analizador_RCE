@@ -1,0 +1,8 @@
+ALMA | 
+Analizador-Datos-RCE | Sistema para analizar datos RCE y generar listados de correcciones para TICS
+Flujos | Flujos Cl+¡nicos / Alma
+GD_Template | 
+GEN_Agent | 
+lists-agent | Agente inteligente para gestionar listas en SharePoint y Microsoft Teams con navegacion web, memoria y capacidades de importacion/exportacion
+NB_Apps | 
+NOs | 

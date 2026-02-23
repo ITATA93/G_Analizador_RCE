@@ -1,0 +1,38 @@
+{
+  "descripcion": "Definicion de campos RCE y sus reglas de validacion",
+  "tablas": {
+    "ejemplo_tabla": {
+      "campos": {
+        "id": {
+          "tipo": "integer",
+          "obligatorio": true,
+          "descripcion": "Identificador unico"
+        },
+        "codigo": {
+          "tipo": "string",
+          "obligatorio": true,
+          "longitud_max": 50,
+          "patron": "^[A-Z0-9]+$",
+          "descripcion": "Codigo alfanumerico"
+        },
+        "fecha_registro": {
+          "tipo": "date",
+          "obligatorio": true,
+          "formato": "YYYY-MM-DD",
+          "descripcion": "Fecha de registro"
+        },
+        "estado": {
+          "tipo": "enum",
+          "obligatorio": true,
+          "valores_validos": ["ACTIVO", "INACTIVO", "PENDIENTE"],
+          "descripcion": "Estado del registro"
+        }
+      }
+    }
+  },
+  "reglas_globales": {
+    "no_espacios_inicio_fin": true,
+    "no_caracteres_especiales": false,
+    "convertir_mayusculas": false
+  }
+}

@@ -1,0 +1,13 @@
+AG_Analizador_RCE | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_Consultas | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_DeepResearch_Salud_Chile | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_Hospital | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_Hospital_Organizador | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_Informatica_Medica | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_Lists_Agent | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_NB_Apps | fmt=OK | eval=True | cb_pending=0 | task_pending=1
+  TP: - Status: PENDING
+AG_Notebook | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_SD_Plantilla | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_SV_Agent | fmt=OK | eval=True | cb_pending=0 | task_pending=0
+AG_TrakCare_Explorer | fmt=OK | eval=True | cb_pending=0 | task_pending=0

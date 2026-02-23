@@ -1,0 +1,152 @@
+﻿
+  =============================================
+  ðYs? Antigravity Full Environment Bootstrap
+  =============================================
+
+  Environment: notebook
+  Base Path:   C:\_Repositorio
+
+  â ?â? Step 1/8: Dev Tools â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?
+    [i] Skipped (--SkipTools)
+
+  â ?â? Step 2/8: Antigravity IDE â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?
+    [âo ] Antigravity IDE installed at C:\Antigravity\ -ForegroundColor Green
+} elseif (True) {
+    Write-Host  [âo] Antigravity CLI available
+
+  â ?â? Step 3/8: Directory Structure â?â?â?â?â?â?â?â?â?â?â?â?
+    [âo ] Directory structure ready -ForegroundColor Green
+} else {
+    Write-Host  [DRY] Would create: C:\_Repositorio
+    Write-Host  [DRY] Would create: C:\_Repositorio\AG_Proyectos
+}
+
+# ==============================================================================
+# STEP 5: Clone AG_Plantilla (the orchestrator) first
+# ==============================================================================
+
+Write-Host "
+Write-Host  â?â? Step 4/8: Clone Orchestrator â?â?â?â?â?â?â?â?â?â?â?â?â?
+    [DRY] Would register 'notebook' at C:\_Repositorio
+powershell : else : El término 'else' 
+no se reconoce 
+En línea: 1 Carácter: 41
++ ... les\7-Zip"; powershell -NoProfile 
+-File scripts/setup/bootstrap_envir ...
++                 ~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecif 
+   ied: (else : El término 'else' no s  
+  e reconoce :String) [], RemoteExcep   
+ tion
+    + FullyQualifiedErrorId : NativeCom 
+   mandError
+ 
+como nombre de un cmdlet, función, 
+archivo de script o programa 
+ejecutable. Compruebe si escribió 
+correctamente el nombre o, si incluyó 
+una ruta de acceso, compruebe que dicha 
+ruta es correcta e inténtelo de nuevo.
+En C:\_Repositorio\AG_Plantilla\scripts\
+setup\bootstrap_environment.ps1: 320 
+Carácter: 3
++ } else {
++   ~~~~
+    + CategoryInfo          : ObjectNot 
+   Found: (else:String) [], CommandNot  
+  FoundException
+    + FullyQualifiedErrorId : CommandNo 
+   tFoundException
+ 
+
+  â ?â? Step 7/8: Restore Secrets â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?â?
+    [+] Found secrets archive. Restoring...
+Traceback (most recent call last):
+  File "C:\_Repositorio\AG_Plantilla\scr
+ipts\setup\agent_config_sync.py", line 
+311, in <module>
+    main()
+  File "C:\_Repositorio\AG_Plantilla\scr
+ipts\setup\agent_config_sync.py", line 
+306, in main
+    pw = args.password or getpass("  
+Password: ")
+                          
+^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\mazua\AppData\Local\Pro
+grams\Python\Python312\Lib\getpass.py", 
+line 110, in win_getpass
+    raise KeyboardInterrupt
+KeyboardInterrupt
+
+-SkipGlobalProfile : El término 
+'-SkipGlobalProfile' no se reconoce 
+como nombre de un cmdlet, función, 
+archivo de script o programa 
+ejecutable. Compruebe si escribió 
+correctamente el nombre o, si incluyó 
+una ruta de acceso, compruebe que dicha 
+ruta es correcta e inténtelo de nuevo.
+En C:\_Repositorio\AG_Plantilla\scripts\
+setup\bootstrap_environment.ps1: 376 
+Carácter: 34
++     Write-Host "    [i] Skipped 
+(-SkipGlobalProfile)" -ForegroundColo 
+...
++                                  
+~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNot 
+   Found: (-SkipGlobalProfile:String)   
+  [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNo 
+   tFoundException
+ 
+
+==================================================================
+Traceback (most recent call last):
+  File "C:\_Repositorio\AG_Plantilla\scr
+ipts\ecosystem_dashboard.py", line 244, 
+in <module>
+    main()
+  File "C:\_Repositorio\AG_Plantilla\scr
+ipts\ecosystem_dashboard.py", line 240, 
+in main
+    print_dashboard(registry, 
+args.category)
+  File "C:\_Repositorio\AG_Plantilla\scr
+ipts\ecosystem_dashboard.py", line 139, 
+in print_dashboard
+    print("  \U0001f310 ANTIGRAVITY 
+ECOSYSTEM DASHBOARD")
+  File "C:\Users\mazua\AppData\Local\Pro
+grams\Python\Python312\Lib\encodings\cp1
+252.py", line 19, in encode
+    return codecs.charmap_encode(input,s
+elf.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec 
+can't encode character '\U0001f310' in 
+position 2: character maps to 
+<undefined>
+
+  =============================================
+  âo. Bootstrap Complete!
+  =============================================
+  Environment: notebook
+  Base Path:   C:\_Repositorio
+
+  What was done:
+    1. Dev tools installed (git, python, node, 7z, gh)
+    2. Antigravity IDE verified
+    3. Directory structure created
+    4. AG_Plantilla (orchestrator) cloned
+    5. Environment registered
+    6. All project repos cloned by category
+    7. Secrets (.env) restored from encrypted archive
+    8. Global agent profile installed
+
+  Open in Antigravity:
+    antigravity C:\_Repositorio\AG_Plantilla
+

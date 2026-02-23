@@ -1,0 +1,275 @@
+{
+  "$schema": "./schema.json",
+  "version": "3.0",
+  "project": "antigravity-workspace",
+  "description": "Sub-agent configuration with multi-vendor support (Gemini, Claude Opus 4.6, Codex)",
+  "vendors": {
+    "available": ["gemini", "claude", "codex"],
+    "default": "gemini",
+    "codex_partial": true,
+    "codex_capabilities": {
+      "mcp": true,
+      "skills": true,
+      "web_search": true,
+      "task_tool": false,
+      "note": "Full featured except Task tool (no parallel subagents)"
+    },
+    "claude_capabilities": {
+      "model": "opus-4.6",
+      "release_date": "2026-02-05",
+      "context_window": "1M (beta)",
+      "max_output_tokens": 128000,
+      "effort_levels": ["low", "medium", "high", "max"],
+      "adaptive_thinking": true,
+      "agent_teams": true,
+      "compaction_api": true,
+      "streaming_required_for_large_output": true,
+      "commands": ["/insights", "/debug", "/compact"],
+      "pricing": {
+        "standard": { "input_per_million": "$5", "output_per_million": "$25" },
+        "premium_over_200k": {
+          "input_per_million": "$10",
+          "output_per_million": "$37.50"
+        }
+      }
+    }
+  },
+  "trigger_resolution": {
+    "strategy": "priority",
+    "note": "When multiple agents match, highest priority (lowest number) wins. If tie, first in list.",
+    "conflict_examples": {
+      "audit code": "code-reviewer (priority 2) beats code-analyst (priority 3)",
+      "documentation": "researcher (priority 1) for external docs, doc-writer (priority 4) for project docs"
+    }
+  },
+  "agent_teams": {
+    "enabled": true,
+    "max_parallel_agents": 5,
+    "supervisor_model": "opus-4.6",
+    "coordination_mode": "autonomous",
+    "teams": {
+      "full-review": {
+        "agents": ["code-reviewer", "test-writer", "doc-writer"],
+        "mode": "parallel",
+        "effort": "max",
+        "use_case": "Comprehensive pre-merge review: code quality + test coverage + docs sync"
+      },
+      "feature-pipeline": {
+        "agents": ["code-analyst", "test-writer", "code-reviewer"],
+        "mode": "sequential",
+        "effort": "high",
+        "use_case": "TDD pipeline: analyze → write tests → review implementation"
+      },
+      "deep-audit": {
+        "agents": ["code-reviewer", "db-analyst", "deployer"],
+        "mode": "parallel",
+        "effort": "max",
+        "use_case": "Full-stack audit: code security + database + infrastructure"
+      },
+      "rapid-fix": {
+        "agents": ["code-analyst", "code-reviewer"],
+        "mode": "sequential",
+        "effort": "high",
+        "use_case": "Quick bug diagnosis and validation"
+      }
+    }
+  },
+  "effort_mapping": {
+    "description": "Maps the Hybrid Lazy Evaluation classifier to Claude effort levels",
+    "NIVEL_1_directo": "low",
+    "NIVEL_2_un_agente": "high",
+    "NIVEL_3_pipeline": "max",
+    "overrides": {
+      "security_tasks": "max",
+      "documentation_only": "medium"
+    }
+  },
+  "agents": [
+    {
+      "name": "code-analyst",
+      "vendor": "gemini",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "project",
+      "priority": 3,
+      "triggers": [
+        "analyze",
+        "explain",
+        "how works",
+        "structure",
+        "architecture"
+      ],
+      "instructions": "Analyze code and architecture. Read-only, never modify. With 1M context, request ALL relevant files rather than fragments.",
+      "codex_config": {
+        "effort": "high",
+        "sequential_warning": true
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "high",
+        "adaptive_thinking": true,
+        "allow_parallel": true
+      },
+      "gemini_config": {
+        "model": "pro",
+        "thinking_mode": true
+      }
+    },
+    {
+      "name": "doc-writer",
+      "vendor": "gemini",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "project",
+      "priority": 4,
+      "triggers": ["document", "README", "CHANGELOG", "DEVLOG", "docs"],
+      "instructions": "Maintain documentation. Read before modifying. Never delete existing content.",
+      "codex_config": {
+        "effort": "medium"
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "medium",
+        "adaptive_thinking": true,
+        "allow_parallel": true
+      },
+      "gemini_config": {
+        "model": "flash"
+      }
+    },
+    {
+      "name": "code-reviewer",
+      "vendor": "claude",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "project",
+      "priority": 2,
+      "triggers": ["review", "audit", "bugs", "security", "code quality"],
+      "instructions": "Review code for bugs and security. Report only, never modify. Use maximum reasoning depth for security-critical findings.",
+      "codex_config": {
+        "effort": "high",
+        "sequential_warning": true,
+        "note": "Reviews executed in 3 sequential passes: security, logic, style"
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "max",
+        "adaptive_thinking": true,
+        "allow_parallel": true
+      },
+      "gemini_config": {
+        "model": "pro",
+        "thinking_mode": true
+      }
+    },
+    {
+      "name": "test-writer",
+      "vendor": "gemini",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "project",
+      "priority": 5,
+      "triggers": [
+        "test",
+        "coverage",
+        "pytest",
+        "jest",
+        "unit test",
+        "integration test"
+      ],
+      "instructions": "Create tests. Use mocks for external dependencies. Never use real data.",
+      "codex_config": {
+        "effort": "high",
+        "note": "Tests generated sequentially, no parallel test execution"
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "high",
+        "adaptive_thinking": true,
+        "allow_parallel": true
+      },
+      "gemini_config": {
+        "model": "pro"
+      }
+    },
+    {
+      "name": "db-analyst",
+      "vendor": "claude",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "project",
+      "priority": 6,
+      "triggers": [
+        "database",
+        "SQL",
+        "query",
+        "schema",
+        "migration",
+        "optimize"
+      ],
+      "instructions": "Database analysis. NEVER execute DELETE/DROP/UPDATE without confirmation. Use maximum reasoning for schema design.",
+      "codex_config": {
+        "effort": "xhigh",
+        "sequential_warning": true
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "max",
+        "adaptive_thinking": true,
+        "allow_parallel": false
+      },
+      "gemini_config": {
+        "model": "pro",
+        "thinking_mode": true
+      }
+    },
+    {
+      "name": "deployer",
+      "vendor": "gemini",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "project",
+      "priority": 7,
+      "triggers": ["deploy", "docker", "CI/CD", "kubernetes", "github actions"],
+      "instructions": "Deployment configuration. Never include secrets in files.",
+      "codex_config": {
+        "effort": "high"
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "high",
+        "adaptive_thinking": true,
+        "allow_parallel": true
+      },
+      "gemini_config": {
+        "model": "pro"
+      }
+    },
+    {
+      "name": "researcher",
+      "vendor": "codex",
+      "supported_vendors": ["gemini", "claude", "codex"],
+      "scope": "global",
+      "priority": 1,
+      "triggers": [
+        "research",
+        "investigate",
+        "find docs",
+        "documentation",
+        "best practices",
+        "API reference",
+        "official docs"
+      ],
+      "instructions": "Deep research for documentation, APIs, best practices. Always cite sources. Read-only, never modify files. With 1M context, ingest full documentation sets when available.",
+      "codex_config": {
+        "effort": "xhigh",
+        "deep_research": true,
+        "note": "Uses Codex deep-research mode with full citations"
+      },
+      "claude_config": {
+        "model": "opus-4.6",
+        "effort": "max",
+        "adaptive_thinking": true,
+        "allow_parallel": true
+      },
+      "gemini_config": {
+        "model": "pro",
+        "thinking_mode": true
+      }
+    }
+  ]
+}

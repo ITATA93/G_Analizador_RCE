@@ -1,0 +1,36 @@
+{
+  "proyecto": {
+    "nombre": "Analizador Datos RCE",
+    "version": "1.0.0",
+    "descripcion": "Analisis de datos extraidos de RCE para identificar correcciones"
+  },
+  "rutas": {
+    "csv_entrada": "./data/csv_entrada",
+    "csv_procesados": "./data/csv_procesados",
+    "csv_errores": "./data/csv_errores",
+    "logs": "./logs",
+    "output": "./output"
+  },
+  "analisis": {
+    "encoding_default": "utf-8",
+    "separador_default": ",",
+    "max_errores_por_archivo": 1000,
+    "generar_resumen": true
+  },
+  "validaciones": {
+    "campos_obligatorios": [],
+    "formatos_fecha": ["YYYY-MM-DD", "DD/MM/YYYY", "DD-MM-YYYY"],
+    "longitudes_maximas": {},
+    "patrones_regex": {}
+  },
+  "reportes": {
+    "formato": "csv",
+    "incluir_estadisticas": true,
+    "agrupar_por_tipo_error": true
+  },
+  "logs": {
+    "nivel": "INFO",
+    "rotacion_dias": 30,
+    "formato": "[{timestamp}] [{nivel}] {mensaje}"
+  }
+}

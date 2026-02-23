@@ -1,0 +1,93 @@
+# Datos - no versionar CSVs
+data/csv_entrada/*.csv
+data/csv_procesados/*.csv
+data/csv_errores/*.csv
+
+# Outputs generados
+output/listados_tics/*
+output/correcciones_tabla/*
+output/correcciones_codigo/*
+
+# Logs
+logs/**/*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Mantener estructura de carpetas
+!data/csv_entrada/.gitkeep
+!data/csv_procesados/.gitkeep
+!data/csv_errores/.gitkeep
+!output/listados_tics/.gitkeep
+!output/correcciones_tabla/.gitkeep
+!output/correcciones_codigo/.gitkeep
+!logs/analisis/.gitkeep
+!logs/correcciones/.gitkeep
+!logs/reportes_tics/.gitkeep
+
+# --- Added by GEN_OS migration ---
+# Environment
+node_modules/
+*.pyc
+.env.local
+.env.*.local
+.venv/
+.venv_temp/
+# IDEs
+# Agent logs (don't version temporary logs)
+.gemini/agents/logs/
+.gemini/agents/locks/
+.gemini/brain/daily/
+# Builds
+dist/
+build/
+*.egg-info/
+.next/
+out/
+# Docker
+docker-compose.override.yml
+# Secrets
+*.pem
+*.key
+credentials/
+secrets/
+# Caches
+.mypy_cache/
+.ruff_cache/
+# Testing
+coverage/
+.coverage
+htmlcov/
+.pytest_cache/
+.nyc_output/
+*.log
+logs/
+# Knowledge Vault
+*.db
+*.sqlite
+data/knowledge_vault.db
+data/knowledge_repo/
+# Team context (temporary, generated)
+.subagents/_team_context.md
+# Agent config sync (encrypted archives — NEVER commit)
+data/secure/
+scripts/setup/agent_config_sync.py
+scripts/setup/_pack_list.txt
+scripts/setup/_unpack_temp/

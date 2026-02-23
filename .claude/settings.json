@@ -1,0 +1,92 @@
+{
+  "skills": [
+    {
+      "name": "analizar-alma",
+      "description": "Ejecuta analisis completo ALMA vs Funcionarios/Medicos",
+      "prompt": "Ejecuta el analisis completo de cruce ALMA vs Personal usando scripts/analyzers/alma_analyzer.py.\n\n1. Carga datos de ALMA (data/csv_entrada/Usuarios/)\n2. Carga datos de Personal (Funcionarios.csv, Medicos HOV)\n3. Cruza por RUT normalizado\n4. Detecta:\n   - Funcionarios SIN usuario ALMA\n   - Usuarios ALMA inactivos\n   - Medicos sin flag EsDoctor\n   - Perfiles posiblemente incorrectos\n   - Problemas de caracteres/acentos\n5. Genera reportes en output/listados_tics/\n\nMuestra resumen de hallazgos.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "cruzar-funcionarios",
+      "description": "Cruza funcionarios con usuarios ALMA por RUT",
+      "prompt": "Realiza cruce especifico de Funcionarios.csv con 01_Usuarios.csv de ALMA.\n\n1. Normaliza RUTs de ambas fuentes\n2. Identifica funcionarios que estan en ALMA\n3. Identifica funcionarios que NO estan en ALMA\n4. Para los que estan, muestra: perfil, grupo, hospital, estado\n5. Genera CSV de funcionarios sin ALMA para crear usuarios\n\nAgrupado por planta y unidad.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "verificar-medicos",
+      "description": "Verifica que medicos tengan configuracion correcta en ALMA",
+      "prompt": "Verifica configuracion de medicos en ALMA.\n\n1. Cruza medicos de Personal con usuarios ALMA\n2. Verifica flag EsDoctor = Y\n3. Verifica perfil de medico asignado\n4. Verifica especialidad configurada\n5. Lista medicos con problemas para corregir\n\nGenera listado priorizado para TICS.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "detectar-caracteres",
+      "description": "Detecta problemas de acentos y caracteres especiales",
+      "prompt": "Analiza todos los campos de texto buscando caracteres problematicos.\n\n1. Revisa nombres en ALMA y Personal\n2. Detecta acentos mal codificados\n3. Detecta caracteres de control ocultos\n4. Detecta caracteres unicode problematicos\n5. Genera listado para correccion\n\nMuestra ejemplos de cada tipo de problema.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "generar-sql",
+      "description": "Genera scripts SQL para importar datos normalizados",
+      "prompt": "Genera scripts SQL usando scripts/loaders/data_loader.py.\n\n1. Carga y normaliza todos los CSVs\n2. Genera INSERTs para tablas ALMA\n3. Genera INSERTs para tablas Personal\n4. Exporta CSVs normalizados listos para importar\n5. Guarda en sql/inserts/ y output/csv_normalizados/\n\nLos scripts siguen el modelo de sql/create_tables.sql",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "analizar-grupos",
+      "description": "Analiza grupos de seguridad asignados a usuarios",
+      "prompt": "Analiza los grupos de seguridad de usuarios ALMA.\n\n1. Lee 07_Usuarios_Grupos.csv\n2. Cuenta usuarios por grupo\n3. Identifica usuarios con multiples grupos\n4. Cruza con funcionarios para ver si grupos son correctos\n5. Sugiere grupos segun cargo/planta\n\nGenera listado de grupos por unidad.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "analizar-perfiles",
+      "description": "Analiza perfiles asignados a usuarios",
+      "prompt": "Analiza los perfiles de usuarios ALMA.\n\n1. Lee 08_Usuarios_Perfiles.csv\n2. Cuenta usuarios por perfil\n3. Identifica usuarios con multiples perfiles\n4. Verifica si perfil corresponde al cargo\n5. Sugiere perfiles segun cargo\n\nMapeo de cargos a perfiles esperados.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "reporte-tics",
+      "description": "Genera reporte completo para entregar a TICS",
+      "prompt": "Genera paquete completo de reportes para TICS.\n\n1. Ejecuta analisis ALMA vs Personal\n2. Genera todos los listados CSV\n3. Genera resumen ejecutivo\n4. Genera scripts SQL de correcciones\n5. Empaqueta todo en output/listados_tics/\n\nListo para entregar sin modificaciones.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "analizar-csv",
+      "description": "Analiza un archivo CSV individual",
+      "prompt": "Analiza el archivo CSV proporcionado.\n\n1. Detecta encoding y separador\n2. Muestra estructura (columnas, tipos)\n3. Detecta valores vacios\n4. Detecta problemas de formato\n5. Genera estadisticas basicas\n\nSi no se especifica archivo, lista disponibles.",
+      "invocation": "slash_command"
+    },
+    {
+      "name": "comparar-csv",
+      "description": "Compara dos CSVs para detectar diferencias",
+      "prompt": "Compara dos archivos CSV por una columna clave.\n\n1. Lee ambos archivos\n2. Identifica registros nuevos\n3. Identifica registros eliminados\n4. Identifica cambios en campos\n5. Genera reporte de diferencias\n\nUtil para comparar antes/despues de correcciones.",
+      "invocation": "slash_command"
+    }
+  ],
+  "project_context": {
+    "tipo": "analizador_alma_personal",
+    "objetivo": "Analizar datos ALMA vs Personal para identificar correcciones",
+    "fuentes_datos": {
+      "alma": "data/csv_entrada/Usuarios/ (12 archivos)",
+      "funcionarios": "data/Funcionarios.csv",
+      "medicos": "data/Lista MEDICOS HOSPITAL enero 2026(MEDICOS HOV).csv"
+    },
+    "flujo_trabajo": [
+      "1. /analizar-alma - Ejecuta cruce completo",
+      "2. /verificar-medicos - Revisa config medicos",
+      "3. /detectar-caracteres - Busca problemas encoding",
+      "4. /reporte-tics - Genera paquete para entregar"
+    ],
+    "archivos_clave": [
+      "scripts/analyzers/alma_analyzer.py - Analizador principal",
+      "scripts/loaders/data_loader.py - Cargador/normalizador",
+      "sql/create_tables.sql - Modelo de datos SQL",
+      "docs/MODELO_DATOS.md - Documentacion del modelo"
+    ],
+    "validaciones": [
+      "Funcionarios en ALMA (por RUT)",
+      "Flag EsDoctor para medicos",
+      "Perfiles segun cargo",
+      "Grupos de seguridad",
+      "Caracteres/acentos en nombres"
+    ]
+  }
+}

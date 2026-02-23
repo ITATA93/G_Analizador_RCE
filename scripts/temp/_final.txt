@@ -1,0 +1,13 @@
+AG_Plantilla | DIRTY(13)
+AG_Analizador_RCE | SYNCED
+AG_Consultas | DIRTY(1)
+AG_DeepResearch_Salud_Chile | SYNCED
+AG_Hospital | SYNCED
+AG_Hospital_Organizador | SYNCED
+AG_Informatica_Medica | SYNCED
+AG_Lists_Agent | SYNCED
+AG_NB_Apps | DIRTY(15)
+AG_Notebook | SYNCED
+AG_SD_Plantilla | SYNCED
+AG_SV_Agent | SYNCED
+AG_TrakCare_Explorer | SYNCED
