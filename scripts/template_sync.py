@@ -1,5 +1,5 @@
 """
-Template Sync — AG_Plantilla
+Template Sync — G_Plantilla
 Syncs core files from project root to _global-profile/ and _template/workspace/.
 
 Usage:
@@ -86,7 +86,7 @@ def sync_files(dry_run: bool = True) -> int:
 def main():
     dry_run = "--apply" not in sys.argv
 
-    print("🔄 Template Sync — AG_Plantilla")
+    print("🔄 Template Sync — G_Plantilla")
     print("=" * 40)
 
     if dry_run:

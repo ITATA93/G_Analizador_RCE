@@ -9,7 +9,7 @@ Detects real hardcoded credentials while ignoring validators/migration tools.
 Usage:
     python scripts/audit_ecosystem.py                # Console output
     python scripts/audit_ecosystem.py --report       # Console + markdown report
-    python scripts/audit_ecosystem.py --project AG_X # Single project
+    python scripts/audit_ecosystem.py --project G_X # Single project
     python scripts/audit_ecosystem.py --fix          # Auto-fix missing files
 """
 
@@ -38,16 +38,16 @@ try:
 except ImportError:
     # Fallback for standalone execution without env_resolver in sys.path
     REPO_ROOT = Path(r"C:\_Repositorio")
-    PLANTILLA_DIR = REPO_ROOT / "AG_Plantilla"
+    PLANTILLA_DIR = REPO_ROOT / "G_Plantilla"
     TEMPLATE_DIR = PLANTILLA_DIR / "_template" / "workspace"
 
     def get_projects_dirs():
-        return [REPO_ROOT / "AG_Proyectos"]
+        return [REPO_ROOT / "G_Proyectos"]
 
     def list_ag_projects():
         d = get_projects_dirs()[0]
         return (
-            sorted([p for p in d.iterdir() if p.is_dir() and p.name.startswith("AG_")])
+            sorted([p for p in d.iterdir() if p.is_dir() and p.name.startswith("G_")])
             if d.exists()
             else []
         )
@@ -693,7 +693,7 @@ def main() -> None:
 
     if args.project:
         project_dir = None
-        if args.project == "AG_Plantilla":
+        if args.project == "G_Plantilla":
             project_dir = PLANTILLA_DIR
         else:
             for p_dir in get_projects_dirs():

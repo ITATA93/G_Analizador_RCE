@@ -27,7 +27,7 @@ try:
     PLANTILLA_DIR = get_plantilla_dir()
 except ImportError:
     REPO_ROOT = Path(r"C:\_Repositorio")
-    PLANTILLA_DIR = REPO_ROOT / "AG_Plantilla"
+    PLANTILLA_DIR = REPO_ROOT / "G_Plantilla"
 
 REGISTRY_PATH = PLANTILLA_DIR / "config" / "project_registry.json"
 

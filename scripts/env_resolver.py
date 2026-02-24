@@ -5,7 +5,7 @@ Antigravity Environment Resolver
 
 Central module that replaces all hardcoded paths across the ecosystem.
 Auto-detects the current environment by probing filesystem paths or
-reading the AG_ENV environment variable.
+reading the G_ENV environment variable.
 
 Usage (as import):
     from env_resolver import get_repo_root, get_projects_dir, get_plantilla_dir
@@ -52,7 +52,7 @@ def detect_environment() -> tuple[str, dict]:
     Detect the current environment.
 
     Resolution order:
-    1. AG_ENV environment variable
+    1. G_ENV environment variable
     2. config['active_environment'] if set
     3. Auto-detect by probing base_path existence
 
@@ -71,8 +71,8 @@ def detect_environment() -> tuple[str, dict]:
             "Run: python env_resolver.py --register"
         )
 
-    # 1. Check AG_ENV env var
-    env_var = config.get("env_var_override", "AG_ENV")
+    # 1. Check G_ENV env var
+    env_var = config.get("env_var_override", "G_ENV")
     env_from_var = os.environ.get(env_var)
     if env_from_var and env_from_var in envs:
         return env_from_var, envs[env_from_var]
@@ -126,7 +126,7 @@ def get_projects_dirs() -> list[Path]:
 
 
 def get_plantilla_dir() -> Path:
-    """Return the AG_Plantilla directory for the current environment."""
+    """Return the G_Plantilla directory for the current environment."""
     _, env_cfg = detect_environment()
     return Path(env_cfg["base_path"]) / env_cfg["plantilla_dir"]
 
@@ -137,19 +137,19 @@ def get_template_dir() -> Path:
 
 
 def list_ag_projects() -> list[Path]:
-    """List all AG_* project directories in the current environment."""
+    """List all G_* project directories in the current environment."""
     projects = []
     for p_dir in get_projects_dirs():
         if p_dir.exists():
             projects.extend(
-                d for d in p_dir.iterdir() if d.is_dir() and d.name.startswith("AG_")
+                d for d in p_dir.iterdir() if d.is_dir() and d.name.startswith("G_")
             )
     return sorted(projects)
 
 
 def resolve_project_path(relative_path: str) -> Path:
     """
-    Resolve a relative project path (e.g., 'AG_Proyectos/AG_Hospital')
+    Resolve a relative project path (e.g., 'G_Proyectos/G_Hospital')
     to an absolute path in the current environment.
     """
     return get_repo_root() / relative_path
@@ -174,8 +174,8 @@ def register_environment(env_id: str, base_path: str, description: str = "") -> 
 
     envs[env_id] = {
         "base_path": base_path,
-        "projects_dir": "AG_Proyectos",
-        "plantilla_dir": "AG_Plantilla",
+        "projects_dir": "G_Proyectos",
+        "plantilla_dir": "G_Plantilla",
         "capabilities": ["git", "python"],
         "description": description or f"Environment on {base_path}",
     }

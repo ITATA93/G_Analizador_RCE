@@ -2,7 +2,7 @@
 .SYNOPSIS
     Antigravity Environment Setup - Interactive Step-by-Step Guide
 .DESCRIPTION
-    Run this after cloning AG_Plantilla on a new machine.
+    Run this after cloning G_Plantilla on a new machine.
     It guides you through setting up everything step by step.
 .EXAMPLE
     .\bootstrap_environment.ps1
@@ -50,11 +50,11 @@ try {
     $BasePath = (Resolve-Path "$PlantillaDir\..").Path
 } catch {
     Write-Host "  No pude detectar la ubicacion automaticamente." -ForegroundColor Yellow
-    $PlantillaDir = Read-Host "  Ruta a AG_Plantilla (ej: C:\_Repositorio\AG_Plantilla)"
+    $PlantillaDir = Read-Host "  Ruta a G_Plantilla (ej: C:\_Repositorio\G_Plantilla)"
     $BasePath = Split-Path $PlantillaDir -Parent
 }
 
-Write-Host "  AG_Plantilla: $PlantillaDir" -ForegroundColor Green
+Write-Host "  G_Plantilla: $PlantillaDir" -ForegroundColor Green
 Write-Host "  Base:         $BasePath" -ForegroundColor Green
 Write-Host ""
 
@@ -139,8 +139,8 @@ if (Test-Path $envFile) {
         if (-not $DryRun) {
             $newEnv = @{
                 base_path     = $BasePath
-                projects_dir  = "AG_Proyectos"
-                plantilla_dir = "AG_Plantilla"
+                projects_dir  = "G_Proyectos"
+                plantilla_dir = "G_Plantilla"
                 capabilities  = @("git", "python")
                 description   = "Registered $(Get-Date -Format 'yyyy-MM-dd')"
             }
@@ -293,9 +293,9 @@ if ((Test-Path $dashboard) -and -not $DryRun) {
     if ($ghOk)  { Write-Host "    gh:     OK" -ForegroundColor Green } else { Write-Host "    gh:     FALTA" -ForegroundColor Red }
 
     $projCount = 0
-    $projDir = "$BasePath\AG_Proyectos"
+    $projDir = "$BasePath\G_Proyectos"
     if (Test-Path $projDir) {
-        $projCount = @(Get-ChildItem $projDir -Directory | Where-Object { $_.Name -match "^AG_" }).Count
+        $projCount = @(Get-ChildItem $projDir -Directory | Where-Object { $_.Name -match "^G_" }).Count
     }
     Write-Host "    Proyectos: $projCount" -ForegroundColor Green
 }

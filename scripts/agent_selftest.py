@@ -8,7 +8,7 @@ Checks dispatch scripts, sub-agent manifests, workflows, memory, and session pro
 
 Usage:
     python scripts/agent_selftest.py                    # Full ecosystem test
-    python scripts/agent_selftest.py --project AG_Hospital  # Single project
+    python scripts/agent_selftest.py --project G_Hospital  # Single project
 """
 
 import argparse
@@ -19,8 +19,8 @@ from pathlib import Path
 # -- Configuration -------------------------------------------------------------
 
 REPO_ROOT = Path(r"C:\_Repositorio")
-PROJECTS_DIR = REPO_ROOT / "AG_Proyectos"
-PLANTILLA_DIR = REPO_ROOT / "AG_Plantilla"
+PROJECTS_DIR = REPO_ROOT / "G_Proyectos"
+PLANTILLA_DIR = REPO_ROOT / "G_Plantilla"
 REGISTRY_PATH = PLANTILLA_DIR / "config" / "project_registry.json"
 
 
@@ -30,12 +30,12 @@ REGISTRY_PATH = PLANTILLA_DIR / "config" / "project_registry.json"
 def get_projects(filter_name: str | None = None) -> list[tuple[str, Path]]:
     """Return AG projects, optionally filtered."""
     projects = []
-    if not filter_name or filter_name == "AG_Plantilla":
+    if not filter_name or filter_name == "G_Plantilla":
         if PLANTILLA_DIR.is_dir():
-            projects.append(("AG_Plantilla", PLANTILLA_DIR))
+            projects.append(("G_Plantilla", PLANTILLA_DIR))
     if PROJECTS_DIR.is_dir():
         for d in sorted(PROJECTS_DIR.iterdir()):
-            if not d.is_dir() or not d.name.startswith("AG_"):
+            if not d.is_dir() or not d.name.startswith("G_"):
                 continue
             if filter_name and d.name != filter_name:
                 continue

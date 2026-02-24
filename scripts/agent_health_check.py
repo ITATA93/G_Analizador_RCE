@@ -1,5 +1,5 @@
 """
-Agent Health Check — AG_Plantilla
+Agent Health Check — G_Plantilla
 Validates that all agent definitions are correctly configured:
 - All agents in manifest exist as definition files
 - All definitions reference output_governance.md
@@ -58,7 +58,7 @@ def check(condition: bool, msg: str, warn_only: bool = False) -> bool:
 
 
 def main():
-    print("🩺 Agent Health Check — AG_Plantilla")
+    print("🩺 Agent Health Check — G_Plantilla")
     print("=" * 50)
 
     # 1. Manifest exists and is valid JSON

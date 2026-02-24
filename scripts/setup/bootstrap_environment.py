@@ -3,7 +3,7 @@
 Antigravity Environment Setup - Interactive Step-by-Step
 ========================================================
 
-Run after cloning AG_Plantilla on a new machine:
+Run after cloning G_Plantilla on a new machine:
     python scripts/setup/bootstrap_environment.py
 
 Requires: git, python, 7z (for secrets)
@@ -63,7 +63,7 @@ def run(cmd, **kwargs):
 # ---- Detect paths ----
 def detect_paths():
     script_dir = Path(__file__).resolve().parent  # scripts/setup/
-    plantilla = script_dir.parent.parent           # AG_Plantilla/
+    plantilla = script_dir.parent.parent           # G_Plantilla/
     base = plantilla.parent                        # C:\_Repositorio/
     return plantilla, base
 
@@ -79,7 +79,7 @@ def main():
     print()
 
     plantilla, base = detect_paths()
-    print(f"  AG_Plantilla: {C.OK}{plantilla}{C.END}")
+    print(f"  G_Plantilla: {C.OK}{plantilla}{C.END}")
     print(f"  Base:         {C.OK}{base}{C.END}")
     print()
 
@@ -152,8 +152,8 @@ def main():
         if env_id not in envs:
             envs[env_id] = {
                 "base_path": str(base),
-                "projects_dir": "AG_Proyectos",
-                "plantilla_dir": "AG_Plantilla",
+                "projects_dir": "G_Proyectos",
+                "plantilla_dir": "G_Plantilla",
                 "capabilities": ["git", "python"],
             }
             env_config["environments"] = envs
@@ -271,9 +271,9 @@ def main():
             else:
                 err(name)
 
-        proj_dir = base / "AG_Proyectos"
+        proj_dir = base / "G_Proyectos"
         if proj_dir.exists():
-            count = len([d for d in proj_dir.iterdir() if d.is_dir() and d.name.startswith("AG_")])
+            count = len([d for d in proj_dir.iterdir() if d.is_dir() and d.name.startswith("G_")])
             ok(f"Proyectos: {count}")
 
     # Done

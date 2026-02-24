@@ -7,8 +7,8 @@ Creates, lists, updates, and tracks tasks that span multiple AG projects.
 Each task is dual-written to both source (outgoing) and target (incoming) TASKS.md.
 
 Usage:
-    python cross_task.py create --from AG_NB_Apps --to AG_Consultas --title "..." --description "..."
-    python cross_task.py list [--project AG_Consultas] [--status pending]
+    python cross_task.py create --from G_NB_Apps --to G_Consultas --title "..." --description "..."
+    python cross_task.py list [--project G_Consultas] [--status pending]
     python cross_task.py update TASK-2026-0001 --status done [--notes "Completed query"]
     python cross_task.py dashboard
 """
@@ -35,15 +35,15 @@ try:
 except ImportError:
     # Fallback for standalone execution without env_resolver in sys.path
     REPO_ROOT = Path(r"C:\_Repositorio")
-    PLANTILLA_DIR = REPO_ROOT / "AG_Plantilla"
+    PLANTILLA_DIR = REPO_ROOT / "G_Plantilla"
 
     def get_projects_dirs():
-        return [REPO_ROOT / "AG_Proyectos"]
+        return [REPO_ROOT / "G_Proyectos"]
 
     def list_ag_projects():
         d = get_projects_dirs()[0]
         return (
-            sorted([p for p in d.iterdir() if p.is_dir() and p.name.startswith("AG_")])
+            sorted([p for p in d.iterdir() if p.is_dir() and p.name.startswith("G_")])
             if d.exists()
             else []
         )
@@ -131,7 +131,7 @@ NORMALIZATION_CHECKLIST = [
 
 def find_project_root(name: str) -> Path | None:
     """Find an AG project root by name."""
-    if name == "AG_Plantilla":
+    if name == "G_Plantilla":
         return PLANTILLA_DIR
 
     for p_dir in get_projects_dirs():
@@ -181,7 +181,7 @@ def ensure_tasks_file(tasks_path: Path, project_name: str) -> None:
     content = f"""# Tasks -- {project_name}
 
 > Unified task board: local work + cross-project delegation.
-> Managed by `AG_Plantilla/scripts/cross_task.py`.
+> Managed by `G_Plantilla/scripts/cross_task.py`.
 >
 > **Agents**: Check this file on session start for pending tasks.
 
@@ -526,15 +526,15 @@ def cmd_normalize(args: argparse.Namespace) -> None:
         print(f"[ERROR] Project not found: {target}")
         sys.exit(1)
 
-    if target == "AG_Plantilla":
-        print("[ERROR] Cannot normalize AG_Plantilla (it IS the standard)")
+    if target == "G_Plantilla":
+        print("[ERROR] Cannot normalize G_Plantilla (it IS the standard)")
         sys.exit(1)
 
     # Ensure TASKS.md exists in both projects
     target_tasks = get_tasks_path(target_root)
     ensure_tasks_file(target_tasks, target)
     plantilla_tasks = get_tasks_path(PLANTILLA_DIR)
-    ensure_tasks_file(plantilla_tasks, "AG_Plantilla")
+    ensure_tasks_file(plantilla_tasks, "G_Plantilla")
 
     created_count = 0
 
@@ -546,7 +546,7 @@ def cmd_normalize(args: argparse.Namespace) -> None:
         outgoing_entry = format_task_entry(
             task_id,
             title,
-            "AG_Plantilla",
+            "G_Plantilla",
             target,
             priority,
             item["description"],
@@ -555,7 +555,7 @@ def cmd_normalize(args: argparse.Namespace) -> None:
         incoming_entry = format_task_entry(
             task_id,
             title,
-            "AG_Plantilla",
+            "G_Plantilla",
             target,
             priority,
             item["description"],
@@ -564,21 +564,21 @@ def cmd_normalize(args: argparse.Namespace) -> None:
 
         insert_task(plantilla_tasks, outgoing_entry, "outgoing")
         insert_task(target_tasks, incoming_entry, "incoming")
-        update_index(task_id, title, "AG_Plantilla", target, priority)
+        update_index(task_id, title, "G_Plantilla", target, priority)
 
         created_count += 1
         print(f"  [+] {task_id}: {item['title']}")
 
     print(f"\n  Normalization tasks created: {created_count}")
     print(f"  Target: {target}")
-    print("  Source: AG_Plantilla")
+    print("  Source: G_Plantilla")
     print(f"\n  Run 'python cross_task.py list --project {target}' to see all tasks.")
 
 
 def update_index(
     task_id: str, title: str, from_project: str, to_project: str, priority: str
 ) -> None:
-    """Update the central TASKS_INDEX.md in AG_Plantilla."""
+    """Update the central TASKS_INDEX.md in G_Plantilla."""
     now = datetime.now().strftime("%Y-%m-%d")
     priority_display = PRIORITY_MAP.get(priority, priority)
 
@@ -672,7 +672,7 @@ def cmd_stale(args: argparse.Namespace) -> None:
     # Scan all projects
     all_dirs = []
     if PLANTILLA_DIR.is_dir():
-        all_dirs.append(("AG_Plantilla", PLANTILLA_DIR))
+        all_dirs.append(("G_Plantilla", PLANTILLA_DIR))
     for d in list_ag_projects():
         all_dirs.append((d.name, d))
 
@@ -716,10 +716,10 @@ def main() -> None:
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  %(prog)s create --from AG_NB_Apps --to AG_Consultas --title "Create census query" --description "..."
-  %(prog)s list --project AG_Consultas --status pending
+  %(prog)s create --from G_NB_Apps --to G_Consultas --title "Create census query" --description "..."
+  %(prog)s list --project G_Consultas --status pending
   %(prog)s update TASK-2026-0001 --status done --notes "Query delivered"
-  %(prog)s check AG_Hospital
+  %(prog)s check G_Hospital
   %(prog)s stale
   %(prog)s dashboard
 """,
@@ -764,13 +764,13 @@ Examples:
     p_normalize = sub.add_parser(
         "normalize", help="Generate normalization checklist as tasks for a project"
     )
-    p_normalize.add_argument("project", help="Target project name (e.g., AG_MyProject)")
+    p_normalize.add_argument("project", help="Target project name (e.g., G_MyProject)")
 
     # check (NEW)
     p_check = sub.add_parser(
         "check", help="Show pending tasks for a project (local + incoming)"
     )
-    p_check.add_argument("project", help="Project name (e.g., AG_Hospital)")
+    p_check.add_argument("project", help="Project name (e.g., G_Hospital)")
 
     # stale (NEW)
     p_stale = sub.add_parser("stale", help="Detect PENDING tasks older than N days")
